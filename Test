@@ -1,0 +1,78 @@
+package subsimlulationsystem;
+
+import java.io.*;
+
+public class Test {
+	public static void main(String[] args) throws IOException {
+		
+		//读取subway.text文件
+		  String filePath = "D:/subway.txt";
+	        FileInputStream fin = new FileInputStream(filePath);
+	        InputStreamReader reader = new InputStreamReader(fin);
+	        BufferedReader buffReader = new BufferedReader(reader);
+	        String[][] array = new String [274][2] ;
+	        String str= "";
+	        String[] STR= new String[2];
+	        int i=0;
+	        while((str=buffReader.readLine())!=null) {
+	    		STR=str.split("\\s+");
+	    	   for(int j=0;j<2;j++) {
+	    	   array[i][j]=STR[j];
+	    	   }
+	    	  i++;
+	       }
+	        
+	    //给submessage赋初值
+	   SubwaySystem sbs =new SubwaySystem();
+	   sbs.route=array;
+	   sbs.assignment(0, 30, sbs.obsubMessage(0, 30, "1号线") );
+	   sbs.assignment(31, 67, sbs.obsubMessage(31, 67, "2号线"));
+	   sbs.assignment(68,90 , sbs.obsubMessage(68, 90, "3号线"));
+	   sbs.assignment(91,117 , sbs.obsubMessage(91, 117, "4号线"));
+	   sbs.assignment(118,143 , sbs.obsubMessage(118, 143, "5号线"));
+	   sbs.assignment(144,169 , sbs.obsubMessage(144, 169, "6号线"));
+	   sbs.assignment(170,201 , sbs.obsubMessage(170, 201, "7号线"));
+	   sbs.assignment(202,226 , sbs.obsubMessage(202, 226, "8号线"));
+	   sbs.assignment(227,240 , sbs.obsubMessage(227, 240, "阳逻线"));
+	   sbs.assignment(241,253 , sbs.obsubMessage(241, 253, "11号线"));
+	   sbs.assignment(254,266 , sbs.obsubMessage(254, 266, "16号线"));
+	   sbs.assignment(267,273 , sbs.obsubMessage(267, 273, "19号线"));
+	  for(int j=0;j<sbs.submessage.length;j++) {
+		   System.out.println(sbs.submessage[j][0]+","+sbs.submessage[j][1]);
+	   }
+	   
+	   //任务一：输出所有中转站
+	   for(int m=0;m<274;m++) {
+		   for(int n=0;n<274;n++)
+		   if(sbs.submessage[m][0].equals(sbs.submessage[n][0])&&m!=n) {
+			   @SuppressWarnings("unused")
+			ArrayList<String> STREM= new ArrayList<String>();
+			   for(int k=0;k<274;k++) {
+				   if(sbs.submessage[k][0].equals(sbs.submessage[m][0])){
+					   STREM.add(sbs.submessage[k][1]);
+			
+				   }
+			   }
+			   System.out.print("<<"+sbs.submessage[m][0]);
+				for(int q=0;q<STREM.size();q++) {
+				System.out.print(",");   
+				System.out.print(STREM.get(q));
+			   }
+				System.out.println(">>");	
+	   }
+	 }
+	        
+	        
+	        
+	        
+	        
+	        
+	        
+	        
+	        
+	        buffReader.close();
+	}
+
+}
+
+
