@@ -41,7 +41,7 @@ public class Test {
 		   System.out.println(sbs.submessage[j][0]+","+sbs.submessage[j][1]);
 	   }
 	   
-	   //任务一：输出所有中转站
+  //任务一：输出所有中转站
 	   for(int m=0;m<274;m++) {
 		   for(int n=0;n<274;n++)
 		   if(sbs.submessage[m][0].equals(sbs.submessage[n][0])&&m!=n) {
@@ -61,7 +61,9 @@ public class Test {
 				System.out.println(">>");	
 	       }
 	 }
-	    	   //任务二：输入某一站点，输出线路距离小于 n 的所有站点集合   
+
+
+   //任务二：输入某一站点，输出线路距离小于 n 的所有站点集合   
 	     String Str="江汉路";
 	       int n=2;
 	       System.out.print(Str+"站，距离为"+n+"的站点为<");
@@ -93,7 +95,45 @@ public class Test {
 	         }    
 	        
 	        
-	        
+   //任务三：输入起点站和终点站的名称，返回一个包含连接起点和终点的所有路径的集合     
+	     Graph G= new Graph();
+	         for(int j=0;j<274;) {
+	    	 for(int k=j;k<273;k++) {
+	    		 if(sbs.submessage[k][1].equals(sbs.submessage[j][1])&& 
+	    			sbs.submessage[k+1][1].equals(sbs.submessage[j][1]))
+	    		 {  
+	    			 Double edge=Double.parseDouble(sbs.route[k][1]);
+	    			G.addEdge(sbs.submessage[k][0], sbs.submessage[k+1][0],edge);
+	    			
+	    		 }
+	    		 if(!sbs.submessage[k][1].equals(sbs.submessage[j][1])) {
+	    			j=k;
+	    		    break;
+	    		 }
+	    		 if(k+1==273){
+	    		 Double edge=Double.parseDouble(sbs.route[k][1]);
+		    	 G.addEdge(sbs.submessage[k][0], sbs.submessage[k+1][0],edge);
+				   j=k+2;
+				   break;
+				}
+	    	 }	     
+	     }	    
+	     
+
+	        String start = "华中科技大学";
+	        String end = "江汉路";
+
+	        List<List<String>> allPaths = G.findAllPaths(start, end);
+	        System.out.println("所有路径:");
+	        Set<List<String>> uniqueLists =new HashSet<List<String>>(allPaths);
+	        for(List<String> string:uniqueLists) {
+	        	System.out.println(string);	
+	        }
+
+
+      //任务四：给定起点站和终点站的名称，返回一条最短路径
+	        List<String> shortestPath = G.findShortestPath(start, end);
+	        System.out.println("最短路径: " + shortestPath);        
 	        
 	        
 	        
