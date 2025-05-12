@@ -1,0 +1,105 @@
+package subsimlulationsystem;
+
+import java.util.*;
+
+public class Graph {
+    private final Map<String, List<Edge>> adjacencyList;
+
+    public Graph() {
+        this.adjacencyList = new HashMap<>();
+    }
+
+    public void addEdge(String source, String destination, double weight) {
+        this.adjacencyList.putIfAbsent(source, new ArrayList<>());
+        this.adjacencyList.putIfAbsent(destination, new ArrayList<>());
+        this.adjacencyList.get(source).add(new Edge(destination, weight));
+        this.adjacencyList.get(destination).add(new Edge(source, weight)); // 无向图
+    }
+
+    public List<List<String>> findAllPaths(String start, String end) {
+        List<List<String>> result = new ArrayList<>();
+        findAllPathsUtil(start, end, new ArrayList<>(), result, new HashSet<>());
+        return result;
+    }
+
+    private void findAllPathsUtil(String current, String end, List<String> path, List<List<String>> result, Set<String> visited) {
+        visited.add(current);
+        path.add(current);
+
+        if (current.equals(end)) {
+            result.add(new ArrayList<>(path));
+        } else {
+            for (Edge edge : adjacencyList.getOrDefault(current, new ArrayList<>())) {
+                if (!visited.contains(edge.destination)) {
+                    findAllPathsUtil(edge.destination, end, path, result, visited);
+                }
+            }
+        }
+
+        path.remove(path.size() - 1);
+        visited.remove(current);
+    }
+
+    public List<String> findShortestPath(String start, String end) {
+        PriorityQueue<Node> pq = new PriorityQueue<>(Comparator.comparingDouble(node -> node.distance));
+        Map<String, Double> distances = new HashMap<>();
+        Map<String, String> previous = new HashMap<>();
+        Set<String> visited = new HashSet<>();
+
+        for (String vertex : adjacencyList.keySet()) {
+            distances.put(vertex, Double.MAX_VALUE);
+        }
+        distances.put(start, 0.0);
+        pq.add(new Node(start, 0.0));
+
+        while (!pq.isEmpty()) {
+            Node currentNode = pq.poll();
+            String currentVertex = currentNode.vertex;
+
+            if (visited.contains(currentVertex)) continue;
+            visited.add(currentVertex);
+
+            for (Edge edge : adjacencyList.getOrDefault(currentVertex, new ArrayList<>())) {
+                if (visited.contains(edge.destination)) continue;
+
+                double newDist = distances.get(currentVertex) + edge.weight;
+                if (newDist < distances.get(edge.destination)) {
+                    distances.put(edge.destination, newDist);
+                    previous.put(edge.destination, currentVertex);
+                    pq.add(new Node(edge.destination, newDist));
+                }
+            }
+        }
+
+        return reconstructPath(previous, start, end);
+    }
+
+    private List<String> reconstructPath(Map<String, String> previous, String start, String end) {
+        List<String> path = new ArrayList<>();
+        for (String at = end; at != null; at = previous.get(at)) {
+            path.add(at);
+        }
+        Collections.reverse(path);
+        return path.size() > 1 && path.get(0).equals(start) ? path : Collections.emptyList();
+    }
+
+   /* private static class Edge {
+        String destination;
+        double weight;
+
+        Edge(String destination, double weight) {
+            this.destination = destination;
+            this.weight = weight;
+        }
+    }
+
+    private static class Node {
+        String vertex;
+        double distance;
+
+        Node(String vertex, double distance) {
+            this.vertex = vertex;
+            this.distance = distance;
+        }
+    }*/
+}
