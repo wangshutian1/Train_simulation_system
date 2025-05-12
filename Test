@@ -59,9 +59,38 @@ public class Test {
 				System.out.print(STREM.get(q));
 			   }
 				System.out.println(">>");	
-	   }
+	       }
 	 }
-	        
+	    	   //任务二：输入某一站点，输出线路距离小于 n 的所有站点集合   
+	     String Str="江汉路";
+	       int n=2;
+	       System.out.print(Str+"站，距离为"+n+"的站点为<");
+	   	   for(int j=0;j<274;j++) {
+	   		   if(sbs.submessage[j][0].equals(Str)) {
+	   			for(int k=0;k<274;k++) {
+	   			  double distance= 0;
+	   				if(sbs.submessage[k][1].equals(sbs.submessage[j][1])) {
+	   					if(k<j) {
+	   						for(int y=1;;y++) {
+	   							distance=distance+Double.parseDouble(array[j-y][1]);
+	   							if(j-y==k)break;
+	   						}
+	   					    if(distance<n) System.out.print("<"+sbs.submessage[k][0]+"站,"+
+	   					    		sbs.submessage[k][1]+","+n+">,");
+	   					}
+	   				    if(k>j) {
+	   				 	for(int y=0;;y++) {
+   							distance=distance+Double.parseDouble(array[j+y][1]);
+   							if(j+y+1==k)break;
+   						}
+   					    if(distance<n) System.out.print("<"+sbs.submessage[k][0]+"站,"+
+   					    		sbs.submessage[k][1]+","+n+">>");	
+	   				       }
+	   				}
+	   			 }
+	   		 }
+	   		   
+	         }    
 	        
 	        
 	        
