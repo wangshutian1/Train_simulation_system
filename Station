@@ -1,0 +1,20 @@
+package subsimlulationsystem;
+
+public class Station {
+  public String stationName;
+  public String belongRoute;
+  private SubwaySystem sub;
+  
+  public Station(String stationName,String belongRoute) {
+	  this.stationName=stationName;
+	  this.belongRoute=belongRoute;
+  }
+  
+  public int obtionRouteNum(String stationName) {
+	  int number=0;
+	  for(int i=0;i<sub.submessage.length;i++) {
+		  if(sub.submessage[i][0]==stationName)
+		  number=number+1; 
+	  }
+	  return number;
+  }
