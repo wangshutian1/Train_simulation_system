@@ -5,7 +5,7 @@ import java.io.*;
 public class Test {
 	public static void main(String[] args) throws IOException {
 		
-		//读取subway.text文件
+	//读取subway.text文件，将文件中的内容存入二维数组array中
 		  String filePath = "D:/subway.txt";
 	        FileInputStream fin = new FileInputStream(filePath);
 	        InputStreamReader reader = new InputStreamReader(fin);
@@ -15,14 +15,14 @@ public class Test {
 	        String[] STR= new String[2];
 	        int i=0;
 	        while((str=buffReader.readLine())!=null) {
-	    		STR=str.split("\\s+");
+	    		STR=str.split("\\s+");                    //将所读取的文本内容按Tab符分隔后存入数组STR中
 	    	   for(int j=0;j<2;j++) {
-	    	   array[i][j]=STR[j];
+	    	   array[i][j]=STR[j];                            //将数组STR中的内容赋给二维数组array
 	    	   }
 	    	  i++;
 	       }
 	        
-	    //给submessage赋初值
+    //给submessage赋初值，submessage的第一列为站点名称，第二列为站点所属线路
 	   SubwaySystem sbs =new SubwaySystem();
 	   sbs.route=array;
 	   sbs.assignment(0, 30, sbs.obsubMessage(0, 30, "1号线") );
@@ -41,7 +41,7 @@ public class Test {
 		   System.out.println(sbs.submessage[j][0]+","+sbs.submessage[j][1]);
 	   }
 	   
-  //任务一：输出所有中转站
+   //任务一：输出所有中转站
 	   for(int m=0;m<274;m++) {
 		   for(int n=0;n<274;n++)
 		   if(sbs.submessage[m][0].equals(sbs.submessage[n][0])&&m!=n) {
@@ -67,26 +67,26 @@ public class Test {
 	     String Str="江汉路";
 	       int n=2;
 	       System.out.print(Str+"站，距离为"+n+"的站点为<");
-	   	   for(int j=0;j<274;j++) {
-	   		   if(sbs.submessage[j][0].equals(Str)) {
-	   			for(int k=0;k<274;k++) {
-	   			  double distance= 0;
-	   				if(sbs.submessage[k][1].equals(sbs.submessage[j][1])) {
-	   					if(k<j) {
-	   						for(int y=1;;y++) {
-	   							distance=distance+Double.parseDouble(array[j-y][1]);
-	   							if(j-y==k)break;
-	   						}
-	   					    if(distance<n) System.out.print("<"+sbs.submessage[k][0]+"站,"+
-	   					    		sbs.submessage[k][1]+","+n+">,");
-	   					}
-	   				    if(k>j) {
-	   				 	for(int y=0;;y++) {
-   							distance=distance+Double.parseDouble(array[j+y][1]);
-   							if(j+y+1==k)break;
+	   	for(int j=0;j<274;j++) {
+	   	   if(sbs.submessage[j][0].equals(Str)) {
+	   		for(int k=0;k<274;k++) {
+	   		  double distance= 0;
+	        	if(sbs.submessage[k][1].equals(sbs.submessage[j][1])) {
+ 			if(k<j) {
+			  for(int y=1;;y++) {
+			   distance=distance+Double.parseDouble(array[j-y][1]);
+			    if(j-y==k)break;
+	   				}
+			    if(distance<n) System.out.print("<"+sbs.submessage[k][0]+"站,"+
+			    		sbs.submessage[k][1]+","+n+">,");
+	   				}
+	   		    if(k>j) {
+			 	for(int y=0;;y++) {
+   				 distance=distance+Double.parseDouble(array[j+y][1]);
+   				 if(j+y+1==k)break;
    						}
-   					    if(distance<n) System.out.print("<"+sbs.submessage[k][0]+"站,"+
-   					    		sbs.submessage[k][1]+","+n+">>");	
+   				    if(distance<n) System.out.print("<"+sbs.submessage[k][0]+"站,"+
+   			    		sbs.submessage[k][1]+","+n+">>");	
 	   				       }
 	   				}
 	   			 }
