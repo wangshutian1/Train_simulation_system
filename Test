@@ -45,20 +45,20 @@ public class Test {
 	   for(int m=0;m<274;m++) {
 		   for(int n=0;n<274;n++)
 		   if(sbs.submessage[m][0].equals(sbs.submessage[n][0])&&m!=n) {
-			   @SuppressWarnings("unused")
-			ArrayList<String> STREM= new ArrayList<String>();
-			   for(int k=0;k<274;k++) {
-				   if(sbs.submessage[k][0].equals(sbs.submessage[m][0])){
-					   STREM.add(sbs.submessage[k][1]);
+		   @SuppressWarnings("unused")
+		   ArrayList<String> STREM= new ArrayList<String>();
+		   for(int k=0;k<274;k++) {
+		   if(sbs.submessage[k][0].equals(sbs.submessage[m][0])){
+      		     STREM.add(sbs.submessage[k][1]);
 			
 				   }
-			   }
-			   System.out.print("<<"+sbs.submessage[m][0]);
-				for(int q=0;q<STREM.size();q++) {
-				System.out.print(",");   
-				System.out.print(STREM.get(q));
-			   }
-				System.out.println(">>");	
+		   }
+		   System.out.print("<<"+sbs.submessage[m][0]);
+			for(int q=0;q<STREM.size();q++) {
+			System.out.print(",");   
+			System.out.print(STREM.get(q));
+		   }
+			System.out.println(">>");	
 	       }
 	 }
 
@@ -134,7 +134,42 @@ public class Test {
       //任务四：给定起点站和终点站的名称，返回一条最短路径
 	        List<String> shortestPath = G.findShortestPath(start, end);
 	        System.out.println("最短路径: " + shortestPath);        
-	        
+
+ 
+     //任务五：将最短乘车路径以简洁的形式打印至标准输出，仅包含每一段乘车路径的起始
+	    ArrayList<String> arraylist = new ArrayList<String>();
+	    for(int k=0;k<shortestPath.size();k++) {
+	    for(int y=0;y<274;y++) {
+		     if((shortestPath.get(k)).equals(sbs.submessage[y][0])) {
+		    	arraylist.add(sbs.submessage[y][1]);
+		    	break;
+		        }	    
+	         }
+         }	  
+	    int x=0;
+	    for(int y=0;y<shortestPath.size();y++) {
+	     if(!(arraylist.get(y)).equals(arraylist.get(0))) {
+	     System.out.print("从"+start+"到"+end+"的最短路径：先乘坐"+
+	  	          arraylist.get(0)+"从"+shortestPath.get(0)+
+	  	          "到"+shortestPath.get(y));
+	     System.out.print(",在"+shortestPath.get(y)+"换乘"+arraylist.get(y));
+	     x=y;
+	     break;
+	           }
+	      }
+	     for(int j=x;j<shortestPath.size();j++) {
+	    	 if(j!=shortestPath.size()-1) {
+	    	 if(!(arraylist.get(j+1)).equals(arraylist.get(j))) {
+	    		 System.out.print("到"+shortestPath.get(j+1));
+	    		 System.out.print(",在"+shortestPath.get(j+1)+"换乘"+arraylist.get(j+1));
+	    		 continue;
+	              }
+	    	  }
+	    	 if(j==shortestPath.size()-1) {
+	    		 System.out.print("到"+shortestPath.get(j)+"。"); 
+	    	 }
+	       }  
+       
 	        
 	        
 	        
