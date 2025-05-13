@@ -6,10 +6,10 @@ public class SubwaySystem {
 	
 	public  String[][] route =new String[274][2];
 	public  ArrayList<String> station=new ArrayList<String>();
-    public  String[][] submessage=new String[274][2];
+        public  String[][] submessage=new String[274][2];
     
     //给submessage赋初值
-    @SuppressWarnings({ "unused", "null" })
+     @SuppressWarnings({ "unused", "null" })
 	public String[][] obsubMessage(int m,int n,String j) {
 		String str =null;
     	String[] string = null; 
@@ -24,16 +24,11 @@ public class SubwaySystem {
     	return strings;
       }
     	  
-    public void assignment(int m,int n,String[][] s) {
+     public void assignment(int m,int n,String[][] s) {
     	int j=0;
     	for(int i=m;i<=n;i++) {
     		submessage[i]=s[j];
     		j=j+1;
             	}
-         }
-   
-    
-	
-    
-
+         }   
 }
