@@ -168,12 +168,45 @@ public class Test {
 	    	 if(j==shortestPath.size()-1) {
 	    		 System.out.print("到"+shortestPath.get(j)+"。"); 
 	    	 }
-	       }  
-       
+	 }  
+
+
+       //任务六:用户从路径集合中选择一条路径，计算该路径对应的乘车费用（普通单程票）
+	       double mile=0;
+	       int p=2;
+	       List<String> path=allPaths.get(p) ;
+	       ArrayList<String> Arylist = new ArrayList<String>();
+		    for(int k=0;k<path.size();k++) {
+		    for(int y=0;y<274;y++) {
+			     if(path.get(k).equals(sbs.submessage[y][0])) {
+			    	Arylist.add(sbs.submessage[y][1]);
+			    	break;
+			     }	    
+		     }
+	     }
+		  
+	      for(int j=0;j<Arylist.size();j++) {
+	    	  if(j!=path.size()-1) {
+	    	  if(Arylist.get(j+1).equals(Arylist.get(j)))
+	    		  mile+=Double.parseDouble(array[j][1]);
+	    	  if(!Arylist.get(j+1).equals(Arylist.get(j))) {
+	    		  mile+=Double.parseDouble(array[j+1][1]);
+	    	      j+=1;
+	    	      continue;}
+	    	  }
+	      }
+	      	    
+	     System.out.println("第"+(p+1)+"条路线："+allPaths.get(p));
+	     System.out.print("从"+start+"到"+end+",选择第"+(p+1)+"条路线,普通单程票的乘车费用为"
+	     +TicketPrice.calculateFare(mile)+"元");
 	        
-	        
-	        
-	        
+	    
+        //任务七:对于同样的路径，计算使用武汉通和日票的乘客的票价
+	     System.out.print(",武汉通刷卡的乘车费用为"
+	    	     +TicketPrice.calculateFare(mile)*0.9+"元"+
+	    		 ",日票的乘车费用为0元。");  
+	               
+	     
 	        buffReader.close();
 	}
 
